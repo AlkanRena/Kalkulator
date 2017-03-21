@@ -4,8 +4,8 @@ import { Component } from '@angular/core';
   selector: 'app-root',
   template: `
              <h1>{{title}}</h1>
-                <div class="col-xs-3"></div>
-                <div class="col-xs-6" *ngIf="!showInput">
+                <div class="col-xs-3 left_column"></div>
+                <div class="col-xs-6 center_column" *ngIf="count.figureVal == 'Wybierz'">
                 <ul>
                     <li *ngFor="let formula of formulas">
                         <input type="radio" name="formula" [(ngModel)]="count.formulaVal" value="{{formula}}">{{formula}}
@@ -17,40 +17,55 @@ import { Component } from '@angular/core';
                     </option>    
                 </select>
                 </div>
-                <div class="col-xs-6" *ngIf="showInput">
-                    <div class="col-xs-12" *ngIf="count.formulaVal === 'circuit'">Obwód
-                    <div class="col-xs-9" *ngIf="count.figureVal === 'Koło'">
-                    Promień: <input [(ngModel)]="variable" value="{{variable}}">
+                <div class="col-xs-6 center_column" *ngIf="count.figureVal !== 'Wybierz'">
+                    <div class="col-xs-12 input_field" *ngIf="count.formulaVal === 'Obwód'">
+                    <div class="col-xs-3 text_field">
+                        <p>Liczymy Obwód</p>
+                        <p>{{count.figureVal}}</p>
+                    </div>
+                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Koło'">
+                    <p>Promień koła: <input [(ngModel)]="variable" value="{{variable}}"></p>
                     <button (click)="resultCircuitCircle()">Policz obwód</button>
                     </div>
-                    <div class="col-xs-9" *ngIf="count.figureVal === 'Kwadrat'">
-                    Bok: <input [(ngModel)]="variable" value="{{variable}}">
+                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Kwadrat'">
+                    <p>Długość boku: <input [(ngModel)]="variable" value="{{variable}}"></p>
                     <button (click)="resultCircuitSquare()">Policz obwód</button>
                     </div>
-                    <div class="col-xs-9" *ngIf="count.figureVal === 'Prostokąt'">
-                    Bok a: <input [(ngModel)]="variable" value="{{variable}}">
-                    Bok b: <input [(ngModel)]="variableB" value="{{variableB}}">
+                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Prostokąt'">
+                    <p>Długość boku a: <input [(ngModel)]="variable" value="{{variable}}"></p>
+                    <p>Długość boku b: <input [(ngModel)]="variableB" value="{{variableB}}"></p>
                     <button (click)="resultCircuitRectangle()">Policz obwód</button>
                     </div>
                     </div>
-                    <div class="col-xs-12" *ngIf="count.formulaVal === 'area'">Pole
-                    <div class="col-xs-9" *ngIf="count.figureVal === 'Koło'">
-                    Promień: <input [(ngModel)]="variable" value="{{variable}}">
+                    <div class="col-xs-12 input_field" *ngIf="count.formulaVal === 'Pole'">
+                    <div class="col-xs-3 text_field">
+                        <p>Liczymy Pole</p>
+                        <p>{{count.figureVal}}</p>
+                    </div>
+                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Koło'">
+                    <p>Promień koła: <input [(ngModel)]="variable" value="{{variable}}"></p>
                     <button (click)="resultAreaCircle()">Policz pole</button>
                     </div>
-                    <div class="col-xs-9" *ngIf="count.figureVal === 'Kwadrat'">
-                    Bok: <input [(ngModel)]="variable" value="{{variable}}">
+                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Kwadrat'">
+                    <p>Długość boku: <input [(ngModel)]="variable" value="{{variable}}"></p>
                     <button (click)="resultAreaSquare()">Policz pole</button>
                     </div>
-                    <div class="col-xs-9" *ngIf="count.figureVal === 'Prostokąt'">
-                    Bok a: <input [(ngModel)]="variable" value="{{variable}}">
-                    Bok b: <input [(ngModel)]="variableB" value="{{variableB}}">
+                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Prostokąt'">
+                    <p>Długość boku a: <input [(ngModel)]="variable" value="{{variable}}"></p>
+                    <p>Długość boku b: <input [(ngModel)]="variableB" value="{{variableB}}"></p>
                     <button (click)="resultAreaRectangle()">Policz pole</button>
                     </div>
                     </div>
-                    Wynik: <input [(ngModel)]="result" value="{{result}}">
+                    <div class="clearfix"></div>
+                    <div class="result_field">
+                        <p>Wynik:</p> 
+                        <input [(ngModel)]="result" value="{{result}}">
+                    </div>
                 </div>
-                <button (click)="toggleInput()">{{showInput ? "Wróc do wyboru" : "Przejdź do obliczeń"}}</button>`,
+                <div class="col-xs-3 right_column">
+                    <button (click)="toggleInput()">{{(count.figureVal !== 'Wybierz') ? "Wróc do wyboru" : "Aby przejść do obliczeń wybierz figurę"}}</button>
+                </div>
+                `,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
@@ -58,21 +73,19 @@ export class AppComponent {
   count;
   geometric_figure : string[];
   formulas : string[];
-  showInput : boolean;
   variable : number;
   variableB : number;
   result : number;
 
 
 constructor(){
-  this.title = 'app works!';
+  this.title = 'Kalkulator!';
   this.count = {
-    formulaVal : 'area',
-    figureVal : 'Kwadrat'
+    formulaVal : 'Obwód',
+    figureVal : 'Wybierz'
   };
   this.geometric_figure = ['Wybierz', 'Koło', 'Kwadrat', 'Prostokąt'];
-  this.formulas = ['circuit', 'area'];
-  this.showInput = false;
+  this.formulas = ['Obwód', 'Pole'];
   this.variable = 0;
   this.variableB = 0;
   this.result = 0;
@@ -83,13 +96,13 @@ constructor(){
 }
 
   toggleInput(){
-    if (this.showInput == true){
-      this.showInput = false;
+    if (this.count.figureVal !== 'Wybierz'){
+      this.count.figureVal = 'Wybierz';
       this.variable = 0;
       this.variableB = 0;
       this.result = 0;
     } else {
-      this.showInput = true;
+
     }
   }
 
