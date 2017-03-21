@@ -8,21 +8,41 @@ import { Component } from '@angular/core';
                 <div class="col-xs-6" *ngIf="!showInput">
                 <ul>
                     <li *ngFor="let formula of formulas">
-                        <input type="radio" name="formula" ngModel="{checked: count.formulaVal = '{{formula}}'}" checked>{{formula}}
+                        <input type="radio" name="formula" [(ngModel)]="count.formulaVal" value="{{formula}}">{{formula}}
                     </li>
                 </ul>
-                <select>
+                <select #t (change)="changeFigure(t.value)">
                     <option *ngFor="let figure of geometric_figure">
                         {{figure}}
                     </option>    
                 </select>
                 </div>
                 <div class="col-xs-6" *ngIf="showInput">
-                    <div class="col-xs-6" *ngIf="count.formulaVal === 'circuit'">Obwód</div>
-                    <div class="col-xs-6" *ngIf="count.formulaVal === 'area'">Pole</div>
-                    <input>
-                    <input>
-                    <input>
+                    <div class="col-xs-12" *ngIf="count.formulaVal === 'circuit'">Obwód
+                    <div class="col-xs-9" *ngIf="count.figureVal === 'Koło'">
+                    Promień: <input>
+                    </div>
+                    <div class="col-xs-9" *ngIf="count.figureVal === 'Kwadrat'">
+                    Bok: <input>
+                    </div>
+                    <div class="col-xs-9" *ngIf="count.figureVal === 'Prostokąt'">
+                    Bok a: <input>
+                    Bok b: <input>
+                    </div>
+                    </div>
+                    <div class="col-xs-12" *ngIf="count.formulaVal === 'area'">Pole
+                    <div class="col-xs-9" *ngIf="count.figureVal === 'Koło'">
+                    Promień: <input>
+                    </div>
+                    <div class="col-xs-9" *ngIf="count.figureVal === 'Kwadrat'">
+                    Bok: <input>
+                    </div>
+                    <div class="col-xs-9" *ngIf="count.figureVal === 'Prostokąt'">
+                    Bok a: <input>
+                    Bok b: <input>
+                    </div>
+                    </div>
+                    Wynik: <input>
                 </div>
                 <button (click)="toggleInput()">{{showInput ? "Wróc do wyboru" : "Przejdź do obliczeń"}}</button>`,
   styleUrls: ['./app.component.css']
@@ -38,16 +58,17 @@ export class AppComponent {
 constructor(){
   this.title = 'app works!';
   this.count = {
-    formulaVal : 'circuit'
+    formulaVal : 'area',
+    figureVal : 'Kwadrat'
   };
-  this.geometric_figure = ['Koło', 'Kwadrat', 'Prostokąt'];
+  this.geometric_figure = ['Wybierz', 'Koło', 'Kwadrat', 'Prostokąt'];
   this.formulas = ['circuit', 'area'];
   this.showInput = false;
-
-
 }
 
-
+  changeFigure(value) {
+  this.count.figureVal = value;
+}
 
   toggleInput(){
     if (this.showInput == true){
