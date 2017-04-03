@@ -15,7 +15,7 @@ import { Component } from '@angular/core';
                     <option *ngFor="let figure of geometric_figure">
                         {{figure}}
                     </option>    
-                </select>
+                </select>{{all_figures}}
                 </div>
                 <div class="col-xs-6 center_column" *ngIf="count.figureVal !== 'Wybierz'">
                     <div class="col-xs-12 input_field" *ngIf="count.formulaVal === 'Obwód'">
@@ -71,6 +71,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title : string;
   count;
+  all_figures : string[];
   geometric_figure : string[];
   formulas : string[];
   variable : number;
@@ -84,6 +85,19 @@ constructor(){
     formulaVal : 'Obwód',
     figureVal : 'Wybierz'
   };
+  this.all_figures = [{
+    figure : 'Koło',
+    figure_formula : ['Obwód', 'Pole'],
+    figure_fields : ['Promień koła']
+  },{
+    figure : 'Kwadrat',
+    figure_formula : ['Obwód', 'Pole'],
+    figure_fields : ['Długość boku']
+  },{
+    figure : 'Kwadrat',
+    figure_formula : ['Obwód', 'Pole'],
+    figure_fields : ['Długość boku A', 'Długość boku B']
+  }];
   this.geometric_figure = ['Wybierz', 'Koło', 'Kwadrat', 'Prostokąt'];
   this.formulas = ['Obwód', 'Pole'];
   this.variable = 0;
