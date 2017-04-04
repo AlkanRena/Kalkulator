@@ -71,7 +71,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title : string;
   count;
-  all_figures : string[];
+  all_figures;
   geometric_figure : string[];
   formulas : string[];
   variable : number;
@@ -87,16 +87,30 @@ constructor(){
   };
   this.all_figures = [{
     figure : 'Koło',
-    figure_formula : ['Obwód', 'Pole'],
-    figure_fields : ['Promień koła']
+    figure_formula : 'Obwód',
+    figure_fields : 'Promień koła'
   },{
     figure : 'Kwadrat',
-    figure_formula : ['Obwód', 'Pole'],
-    figure_fields : ['Długość boku']
+    figure_formula : 'Obwód',
+    figure_fields : 'Długość boku'
   },{
     figure : 'Kwadrat',
-    figure_formula : ['Obwód', 'Pole'],
-    figure_fields : ['Długość boku A', 'Długość boku B']
+    figure_formula : 'Obwód',
+    figure_fields : 'Długość boku A',
+    figure_fields_B : 'Długość boku B'
+  },{
+    figure : 'Koło',
+    figure_formula : 'Pole',
+    figure_fields : 'Promień koła'
+  },{
+    figure : 'Kwadrat',
+    figure_formula : 'Pole',
+    figure_fields : 'Długość boku'
+  },{
+    figure : 'Kwadrat',
+    figure_formula : 'Pole',
+    figure_fields : 'Długość boku A',
+    figure_fields_B : 'Długość boku B'
   }];
   this.geometric_figure = ['Wybierz', 'Koło', 'Kwadrat', 'Prostokąt'];
   this.formulas = ['Obwód', 'Pole'];
