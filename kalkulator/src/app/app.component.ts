@@ -12,10 +12,10 @@ import { Component } from '@angular/core';
                     </li>
                 </ul>
                 <select #t (change)="changeFigure(t.value)">
-                    <option *ngFor="let figure of geometric_figure">
-                        {{figure}}
+                    <option *ngFor="let figures of all_figures" *ngIf="count.formulaVal === figures.figure_formula">
+                        <p>{{figures.figure}}</p>
                     </option>    
-                </select>{{all_figures}}
+                </select>
                 </div>
                 <div class="col-xs-6 center_column" *ngIf="count.figureVal !== 'Wybierz'">
                     <div class="col-xs-12 input_field" *ngIf="count.formulaVal === 'Obwód'">
@@ -86,31 +86,41 @@ constructor(){
     figureVal : 'Wybierz'
   };
   this.all_figures = [{
+    id : 1,
     figure : 'Koło',
     figure_formula : 'Obwód',
-    figure_fields : 'Promień koła'
+    figure_title : 'Liczymy Obwód koła',
+    figure_fields : ['Promień koła']
   },{
+    id : 2,
     figure : 'Kwadrat',
     figure_formula : 'Obwód',
-    figure_fields : 'Długość boku'
+    figure_title : 'Liczymy Obwód Kwadratu',
+    figure_fields : ['Długość boku']
   },{
-    figure : 'Kwadrat',
+    id : 3,
+    figure : 'Prostokąt',
     figure_formula : 'Obwód',
-    figure_fields : 'Długość boku A',
-    figure_fields_B : 'Długość boku B'
+    figure_title : 'Liczymy Obwód Prostokąta',
+    figure_fields : ['Długość boku A', 'Długość boku B']
   },{
+    id : 4,
     figure : 'Koło',
     figure_formula : 'Pole',
-    figure_fields : 'Promień koła'
+    figure_title : 'Liczymy Pole koła',
+    figure_fields : ['Promień koła']
   },{
+    id : 5,
     figure : 'Kwadrat',
     figure_formula : 'Pole',
-    figure_fields : 'Długość boku'
+    figure_title : 'Liczymy Pole Kwadratu',
+    figure_fields : ['Długość boku']
   },{
-    figure : 'Kwadrat',
+    id : 6,
+    figure : 'Prostokąt',
     figure_formula : 'Pole',
-    figure_fields : 'Długość boku A',
-    figure_fields_B : 'Długość boku B'
+    figure_title : 'Liczymy Pole Prostokąta',
+    figure_fields : ['Długość boku A', 'Długość boku B']
   }];
   this.geometric_figure = ['Wybierz', 'Koło', 'Kwadrat', 'Prostokąt'];
   this.formulas = ['Obwód', 'Pole'];
