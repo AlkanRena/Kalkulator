@@ -12,49 +12,21 @@ import { Component } from '@angular/core';
                     </li>
                 </ul>
                 <select #t (change)="changeFigure(t.value)">
-                    <option *ngFor="let figures of all_figures" *ngIf="count.formulaVal === figures.figure_formula">
-                        <p>{{figures.figure}}</p>
+                    <option *ngFor="let figures of all_figures">
+                        <p  *ngIf="count.formulaVal === figures.figure_formula">{{figures.figure}}</p>
                     </option>    
                 </select>
                 </div>
                 <div class="col-xs-6 center_column" *ngIf="count.figureVal !== 'Wybierz'">
-                    <div class="col-xs-12 input_field" *ngIf="count.formulaVal === 'Obwód'">
-                    <div class="col-xs-3 text_field">
-                        <p>Liczymy Obwód</p>
-                        <p>{{count.figureVal}}</p>
-                    </div>
-                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Koło'">
-                    <p>Promień koła: <input [(ngModel)]="variable" value="{{variable}}"></p>
-                    <button (click)="resultCircuitCircle()">Policz obwód</button>
-                    </div>
-                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Kwadrat'">
-                    <p>Długość boku: <input [(ngModel)]="variable" value="{{variable}}"></p>
-                    <button (click)="resultCircuitSquare()">Policz obwód</button>
-                    </div>
-                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Prostokąt'">
-                    <p>Długość boku a: <input [(ngModel)]="variable" value="{{variable}}"></p>
-                    <p>Długość boku b: <input [(ngModel)]="variableB" value="{{variableB}}"></p>
-                    <button (click)="resultCircuitRectangle()">Policz obwód</button>
-                    </div>
-                    </div>
-                    <div class="col-xs-12 input_field" *ngIf="count.formulaVal === 'Pole'">
-                    <div class="col-xs-3 text_field">
-                        <p>Liczymy Pole</p>
-                        <p>{{count.figureVal}}</p>
-                    </div>
-                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Koło'">
-                    <p>Promień koła: <input [(ngModel)]="variable" value="{{variable}}"></p>
-                    <button (click)="resultAreaCircle()">Policz pole</button>
-                    </div>
-                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Kwadrat'">
-                    <p>Długość boku: <input [(ngModel)]="variable" value="{{variable}}"></p>
-                    <button (click)="resultAreaSquare()">Policz pole</button>
-                    </div>
-                    <div class="col-xs-9 value_field" *ngIf="count.figureVal === 'Prostokąt'">
-                    <p>Długość boku a: <input [(ngModel)]="variable" value="{{variable}}"></p>
-                    <p>Długość boku b: <input [(ngModel)]="variableB" value="{{variableB}}"></p>
-                    <button (click)="resultAreaRectangle()">Policz pole</button>
-                    </div>
+                    <div class="col-xs-12 input_field" *ngFor="let figures of all_figures">
+                        <div class="col-xs-3 text_field" *ngIf="(count.figureVal === figures.figure) && (count.formulaVal === figures.figure_formula)">
+                            <p>{{figures.figure_title}}</p>
+                            
+                        </div>
+                        <div class="col-xs-9 value_field" *ngIf="(count.figureVal === figures.figure) && (count.formulaVal === figures.figure_formula)">
+                            <p *ngFor="let inputFigure of figures.figure_fields">{{inputFigure}}<input [(ngModel)]="variable" value="{{variable}}"></p>
+                            <button (click)='figures.figure_result +"()"'>{{figures.figure_count}}</button>
+                        </div>
                     </div>
                     <div class="clearfix"></div>
                     <div class="result_field">
@@ -86,41 +58,53 @@ constructor(){
     figureVal : 'Wybierz'
   };
   this.all_figures = [{
-    id : 1,
+    id : '1',
     figure : 'Koło',
     figure_formula : 'Obwód',
     figure_title : 'Liczymy Obwód koła',
-    figure_fields : ['Promień koła']
+    figure_fields : ['Promień koła'],
+    figure_count : 'Oblicz obwód',
+    figure_result : 'resultCircuitCircle'
   },{
-    id : 2,
+    id : '2',
     figure : 'Kwadrat',
     figure_formula : 'Obwód',
     figure_title : 'Liczymy Obwód Kwadratu',
-    figure_fields : ['Długość boku']
+    figure_fields : ['Długość boku'],
+    figure_count : 'Oblicz obwód',
+    figure_result : 'resultCircuitSquare'
   },{
-    id : 3,
+    id : '3',
     figure : 'Prostokąt',
     figure_formula : 'Obwód',
     figure_title : 'Liczymy Obwód Prostokąta',
-    figure_fields : ['Długość boku A', 'Długość boku B']
+    figure_fields : ['Długość boku A', 'Długość boku B'],
+    figure_count : 'Oblicz obwód',
+    figure_result : 'resultCircuitRectangle'
   },{
-    id : 4,
+    id : '4',
     figure : 'Koło',
     figure_formula : 'Pole',
     figure_title : 'Liczymy Pole koła',
-    figure_fields : ['Promień koła']
+    figure_fields : ['Promień koła'],
+    figure_count : 'Oblicz pole',
+    figure_result : 'resultAreaCircle'
   },{
-    id : 5,
+    id : '5',
     figure : 'Kwadrat',
     figure_formula : 'Pole',
     figure_title : 'Liczymy Pole Kwadratu',
-    figure_fields : ['Długość boku']
+    figure_fields : ['Długość boku'],
+    figure_count : 'Oblicz pole',
+    figure_result : 'resultAreaSquare'
   },{
-    id : 6,
+    id : '6',
     figure : 'Prostokąt',
     figure_formula : 'Pole',
     figure_title : 'Liczymy Pole Prostokąta',
-    figure_fields : ['Długość boku A', 'Długość boku B']
+    figure_fields : ['Długość boku A', 'Długość boku B'],
+    figure_count : 'Oblicz pole',
+    figure_result : 'resultAreaRectangle'
   }];
   this.geometric_figure = ['Wybierz', 'Koło', 'Kwadrat', 'Prostokąt'];
   this.formulas = ['Obwód', 'Pole'];
